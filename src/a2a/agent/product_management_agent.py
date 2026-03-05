@@ -118,6 +118,56 @@ def _get_openai_chat_completion_service() -> OpenAIChatClient:
 
 # endregion
 
+# region Get Products
+
+@tool(
+    name='get_products',
+    description='Retrieves a set of products based on a natural language user query.'
+)
+def get_products(
+    question: Annotated[
+        str, 'Natural language query to retrieve products, e.g. "What kinds of paint rollers do you have in stock?"'
+    ],
+) -> list[dict[str, Any]]:
+    try:
+        # Simulate product retrieval based on the question
+        # In a real implementation, this would query a database or external service
+        product_dict = [
+            {
+                "id": "1",
+                "name": "Eco-Friendly Paint Roller",
+                "type": "Paint Roller",
+                "description": "A high-quality, eco-friendly paint roller for smooth finishes.",
+                "punchLine": "Roll with the best, paint with the rest!",
+                "price": 15.99
+            },
+            {
+                "id": "2",
+                "name": "Premium Paint Brush Set",
+                "type": "Paint Brush",
+                "description": "A set of premium paint brushes for detailed work and fine finishes.",
+                "punchLine": "Brush up your skills with our premium set!",
+                "price": 25.49
+            },
+            {
+                "id": "3",
+                "name": "All-Purpose Paint Tray",
+                "type": "Paint Tray",
+                "description": "A durable paint tray suitable for all types of rollers and brushes.",
+                "punchLine": "Tray it, paint it, love it!",
+                "price": 9.99
+            }
+        ]
+        return product_dict
+    except Exception as e:
+        return f'Product recommendation failed: {e!s}'
+
+
+# endregion
+
+
+
+
 # region Response Format
 
 
