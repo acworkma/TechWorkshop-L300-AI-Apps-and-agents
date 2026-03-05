@@ -217,6 +217,26 @@ class AgentFrameworkProductManagementAgent:
             ),
         )
 
+        # Define a ProductAgent to retrieve products from the Zava catalog
+        product_agent = Agent(
+            client=chat_service,
+            name='ProductAgent',
+            instructions=("""
+                You specialize in handling product-related requests from customers and employees.
+                This includes providing a list of products, identifying available quantities,
+                providing product prices, and giving product descriptions as they exist in the product catalog.
+                Your goal is to assist customers promptly and accurately with all product-related inquiries.
+                You are a helpful assistant that MUST use the get_products tool to answer all the questions from user.
+                You MUST NEVER answer from your own knowledge UNDER ANY CIRCUMSTANCES.
+                You MUST only use products from the get_products tool to answer product-related questions.
+                Do not ask the user for more information about the products; instead use the get_products tool to find the
+                relevant products and provide the information based on that.
+                Do not make up any product information. Use only the product information from the get_products tool.
+                """
+            ),
+            tools=get_products,
+        )
+
 
         # Define the main ProductManagerAgent to delegate tasks to the appropriate agents
         self.agent = Agent(
