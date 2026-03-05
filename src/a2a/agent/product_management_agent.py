@@ -144,6 +144,30 @@ class AgentFrameworkProductManagementAgent:
         # Configure the chat completion service explicitly
         chat_service = get_chat_completion_service(ChatServices.AZURE_OPENAI)
 
+        #added
+        # Define an MarketingAgent to handle marketing-related tasks
+        marketing_agent = Agent(
+            client=chat_service,
+            name='MarketingAgent',
+            instructions=(
+                'You specialize in planning and recommending marketing strategies for products. '
+                'This includes identifying target audiences, making product descriptions better, and suggesting promotional tactics. '
+                'Your goal is to help businesses effectively market their products and reach their desired customers.'
+            ),
+        )
+
+        # Define an RankerAgent to sort and recommend results
+        ranker_agent = Agent(
+            client=chat_service,
+            name='RankerAgent',
+            instructions=(
+                'You specialize in ranking and recommending products based on various criteria. '
+                'This includes analyzing product features, customer reviews, and market trends to provide tailored suggestions. '
+                'Your goal is to help customers find the best products for their needs.'
+            ),
+        )
+
+
         # Define the main ProductManagerAgent to delegate tasks to the appropriate agents
         self.agent = Agent(
             client=chat_service,
@@ -160,7 +184,9 @@ class AgentFrameworkProductManagementAgent:
                 '- Use "error" when something went wrong.\n\n'
                 'Never respond with plain text. Always use the JSON format above.'
             ),
-            tools=[],
+            #tools=[],
+            tools=[marketing_agent.as_tool(), ranker_agent.as_tool()],
+
         )
 
     async def invoke(self, user_input: str, session_id: str) -> dict[str, Any]:
