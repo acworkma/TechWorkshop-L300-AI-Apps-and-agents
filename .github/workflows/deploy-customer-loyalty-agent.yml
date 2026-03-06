@@ -8,6 +8,7 @@ on:
       - 'src/app/agents/customerLoyaltyAgent_initializer.py'
       - 'src/prompts/CustomerLoyaltyAgentPrompt.txt'
       - 'src/app/tools/discountLogic.py'
+      - '.github/workflows/deploy-customer-loyalty-agent.yml'
   workflow_dispatch:
 
 jobs:
