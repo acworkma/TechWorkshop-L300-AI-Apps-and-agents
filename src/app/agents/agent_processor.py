@@ -127,7 +127,7 @@ def mcp_inventory_check(product_list: List[str]) -> list:
         results = []
         for product_id in product_list:
             try:
-                inventory_data = await mcp_client.check_inventory(product_id)
+                inventory_data = await mcp_client.call_tool("check_product_inventory", {"product_id": product_id})
                 results.append(inventory_data)
             except Exception as e:
                 print(f"Error checking inventory for {product_id}: {e}")
